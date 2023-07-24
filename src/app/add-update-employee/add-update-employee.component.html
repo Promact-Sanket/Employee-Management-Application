@@ -1,0 +1,114 @@
+<div class="container">
+    <div>
+        <h2 class="form_Name">Add Employee</h2>
+    </div>
+    <form [formGroup]="addEmployeeForm" (ngSubmit)="AddEmployee()">
+        <input type="hidden" formControlName="id">
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <label> Employee Id:</label>
+                <input type="text" class="form-control" placeholder="Enter Id" formControlName="empId">
+                <span
+                    *ngIf=" addEmployeeForm.get('empId').invalid && (addEmployeeForm.get('empId').touched || addEmployeeForm.get('empId').dirty)"
+                    class="errorMeaage">
+                    Employee Id is required
+                </span>
+            </div>
+            <div class="col-md-6">
+                <label> Name:</label>
+                <input type="text" class="form-control" placeholder="Enter Name" formControlName="empName">
+                <span
+                    *ngIf="  addEmployeeForm.get('empName').errors && (addEmployeeForm.get('empName').touched || addEmployeeForm.get('empName').dirty)"
+                    class="errorMeaage">
+                    <span *ngIf="addEmployeeForm.get('empName').errors.required">
+                        Employee Name is required
+                    </span>
+                    <span *ngIf="addEmployeeForm.get('empName').errors.minlength">
+                        Employee Name must be greater than 5 characters
+                    </span>
+                </span>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <label> Contact Number:</label>
+                <input type="number" class="form-control" placeholder="Enter Contact Number" name="contactNo"
+                    formControlName="contactNo">
+                <span
+                    *ngIf=" addEmployeeForm.get('contactNo').errors && (addEmployeeForm.get('contactNo').touched || addEmployeeForm.get('contactNo').dirty) "
+                    class="errorMeaage">
+                    <span *ngIf="addEmployeeForm.get('contactNo').errors.required">
+                        Contact Number is required
+                    </span>
+                    <span
+                        *ngIf="addEmployeeForm.get('contactNo').errors.min || addEmployeeForm.get('contactNo').errors.max">
+                        Contact Number must be minimam 5 Number or and maximum 12 Number
+                    </span>
+                </span>
+            </div>
+            <div class="col-md-6">
+                <label> Email:</label>
+                <input type="text" class="form-control" placeholder="Enter Email" name="email" formControlName="email">
+                <span
+                    *ngIf=" addEmployeeForm.get('email').errors && (addEmployeeForm.get('email').touched || addEmployeeForm.get('email').dirty)"
+                    class="errorMeaage">
+                    <span *ngIf="addEmployeeForm.get('email').errors.required">
+                        Email Id is required
+                    </span>
+                    <span *ngIf="addEmployeeForm.get('email').errors.email">
+                        Email Id is not vaild
+                    </span>
+                </span>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="row col-md-6" formArrayName="skill">
+                <div class="col-6">
+                    <label> Skill:</label>
+                </div>
+                <div class=" col-6 addSkill">
+                    <button type="button" (click)="onAddSkillButtonClick()" class="btn addbtn">Add Skill +</button>
+                </div>
+                <div *ngFor="let item of skillControls, let i = index" formGroupName="{{i}}" class="margin-top row">
+                    <div class="col-5 mt-3 ">
+                        <input type="text" class="form-control" placeholder="Enter skill" formControlName="name">
+                    </div>
+                    <div class="col-6 mt-3">
+                        <select formControlName="experience" class="form-control bootstrap-select">
+                            <option value="">Select Experiance</option>
+                            <option value="1 year">1 year</option>
+                            <option value="2 years">2 years</option>
+                            <option value="3 years">3 years</option>
+                            <option value="4 years">4 years </option>
+                            <option value="5 years">5 years </option>
+                        </select>
+                    </div>
+                    <div class="col-1 mt-3" *ngIf="(addEmployeeForm.get('skill')).length>1">
+                        <button type="button" class=" btn btn-sm  deleteicon"> <i (click)="deleteSkillButtonClick(i)"
+                                style="padding-top: 20%;" class="material-icons">delete</i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label> Gender:</label>
+                <div class="radio-inline">
+                    <input class="offset-md-1" value="Male" type="radio" formControlName="gender" />
+                    <label class="radio-label"> Male</label>
+                    <input class="offset-md-1" value="Female" type="radio" formControlName="gender" />
+                    <label class="radio-label">Female</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div *ngIf="!employeeTableid" class="col-md-5">
+                <button [disabled]="addEmployeeForm.invalid" class="btn btnsubmit">Submit</button>
+            </div>
+            <div *ngIf="employeeTableid" class="col-md-5">
+                <button [disabled]="addEmployeeForm.invalid" class="btn btnsubmit">Update</button>
+            </div>
+        </div>
+    </form>
+</div>

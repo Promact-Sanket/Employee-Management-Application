@@ -1,0 +1,38 @@
+<form>
+    <div>
+      <div class="addButton">
+        <button (click)="_router.navigate(['/create']);" type="button" class="btn btn-success">Add Employee</button>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Contact</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Skill</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let employee of employeeList">
+            <th>{{employee.empId}}</th>
+            <td>{{employee.empName}}</td>
+            <td>{{employee.email}}</td>
+            <td>{{employee.contactNo}}</td>
+            <td>{{employee.gender}}</td>
+            <td>
+                <span *ngFor="let skill of employee.skill, index as i">
+              {{i+1}}. {{skill.name}}(Exp.{{skill.experience}}) <br>
+            </span>
+            </td>
+            <td>
+             <button (click)="updateEmployee(employee.id)" type="button" class="btn"> <i class="material-icons ">edit</i></button>
+             <button (click)="deleteEmployee(employee.id,employee.empName)" type="button" class="btn offset-md-1"><i class="material-icons ">delete</i></button> 
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </form>
